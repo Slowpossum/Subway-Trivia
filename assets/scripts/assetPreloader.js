@@ -1,4 +1,6 @@
-var loadedImages = loadImages(["./assets/images/subwayCar.png", "./assets/images/coolDude.png", "./assets/images/punk.png"]);
+var imagesToLoad = ["./assets/images/subwayCar.png", "./assets/images/coolDude.png", "./assets/images/punk.png", 
+                    "./assets/images/light.png"];
+var loadedImages = loadImages(imagesToLoad);
 
 function loadImages(arr) {
     this.images = {};

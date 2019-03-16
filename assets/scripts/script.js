@@ -1,5 +1,5 @@
 var script = {
-    length: 7,
+    length: 8,
     1: {
         subject: "coolDude",
         type: "statement",
@@ -53,7 +53,7 @@ var script = {
         delay: 1000,
         delaySet: false,
         timerComplete: false,
-        text: `Yeah, man, do so.`
+        text: `Yeah, do so.`
     },
     7: {
         subject: "coolDude",
@@ -61,6 +61,32 @@ var script = {
         delay: 3000,
         delaySet: false,
         timerComplete: false,
-        text: `Hey man, you mind if I ask you some questions? Trivia and junk. I always wanted to be a gameshow host... Never really got around to it.`,
+        answer: 0,
+        choices: {
+            amount: 2,
+            1: "Sure...",
+            2: "Please don't."
+        },
+        text: `Hey, you mind if I ask you some questions? Trivia and junk. I always wanted to be a gameshow host... Never really got around to it.`,
+        doAfter: function () {
+            if(this.answer === 1) {
+                script[8].text = "Sure, go for it.";
+            } else {
+                script[8].text = "Please don't.";
+            }
+        }
+    },
+    8: {
+        subject: "punk",
+        type: "statement",
+        delay: 500,
+        delaySet: false,
+        timerComplete: false,
+        text: ``,
+        doAfter: function () {
+            if (this.text === "Please don't.") {
+                speechBubble.scriptComplete = true;
+            }
+        }
     }
 };

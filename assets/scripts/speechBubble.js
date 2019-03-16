@@ -32,7 +32,7 @@ var speechBubble = {
         }
     },
     scriptPos: 1,
-    speechTimer: 0,
+    cursorLocation: 1,
     scriptPause: false,
     scriptComplete: false,
     scriptAdvance: false,
@@ -42,19 +42,35 @@ var speechBubble = {
 
 function talk() {
     if (!speechBubble.scriptComplete) {
-        if (script[speechBubble.scriptPos].delaySet === false) {
-            clearTimeout(speechBubble);
-            speechTimer = setTimeout(function () {
-                script[speechBubble.scriptPos].timerComplete = true;
-            }, script[speechBubble.scriptPos].delay);
-            script[speechBubble.scriptPos].delaySet = true;
-        } else {
-            if (script[speechBubble.scriptPos].timerComplete === true) {
-                putBubble();
+        if (script[speechBubble.scriptPos].type === "statement") {
+            if (script[speechBubble.scriptPos].delaySet === false) {
+                clearTimeout(speechBubble);
+                speechTimer = setTimeout(function () {
+                    script[speechBubble.scriptPos].timerComplete = true;
+                }, script[speechBubble.scriptPos].delay);
+                script[speechBubble.scriptPos].delaySet = true;
+            } else {
+                if (script[speechBubble.scriptPos].timerComplete === true) {
+                    putBubble();
+                }
+            }
+        } else if (script[speechBubble.scriptPos].type === "question") {
+            if (script[speechBubble.scriptPos].delaySet === false) {
+                clearTimeout(speechBubble);
+                speechTimer = setTimeout(function () {
+                    script[speechBubble.scriptPos].timerComplete = true;
+                }, script[speechBubble.scriptPos].delay);
+                script[speechBubble.scriptPos].delaySet = true;
+            } else {
+                if (script[speechBubble.scriptPos].timerComplete === true) {
+                    putBubble();
+                }
+            }
+
+            if (speechBubble.scriptAdvance === true) {
+                askQuestion();
             }
         }
-
-        
     }
 }
 
@@ -126,27 +142,62 @@ function putText() {
     }
 }
 
-$(document).keyup(function () {
+function askQuestion() {
+    ctx.fillStyle = "white";
+    ctx.fillRect(570, 205, 200, 30 * script[speechBubble.scriptPos].choices.amount);
+    ctx.fillStyle = "black";
+
+    for (var i = 0; i < script[speechBubble.scriptPos].choices.amount; i++) {
+        ctx.fillText(script[speechBubble.scriptPos].choices[i + 1], 595, 225 + (25 * i));
+
+        if (i === speechBubble.cursorLocation - 1) {
+            ctx.drawImage(loadedImages["./assets/images/cursor.png"], 575, 212 + (25 * i), 3 * triviaGame.scale - 1, 3 * triviaGame.scale - 1);
+        }
+    }
+
+}
+
+$(document).keyup(function (e) {
     if (speechBubble.scriptPause) {
         speechBubble.currentLines = ["", "", ""];
         speechBubble.currLine = 0;
         speechBubble.scriptPause = false;
     } else if (speechBubble.scriptAdvance === true) {
         if (speechBubble.scriptPos !== script.length) {
-            if (script[speechBubble.scriptPos].doAfter !== undefined && script[speechBubble.scriptPos].timerComplete === true && speechBubble.scriptAdvance === true) {
+            if (script[speechBubble.scriptPos].doAfter !== undefined && speechBubble.scriptAdvance === true && script[speechBubble.scriptPos].type === "statement") {
                 if (script[speechBubble.scriptPos].functionRun === false) {
                     script[speechBubble.scriptPos].doAfter();
                     script[speechBubble.scriptPos].functionRun = true;
                 }
             }
 
+            if (script[speechBubble.scriptPos].type === "statement") {
+                speechBubble.currentLines = ["", "", ""];
+                speechBubble.currLine = 0;
+                speechBubble.scriptPause = false;
+                speechBubble.scriptAdvance = false;
+                speechBubble.letterPos = 0;
+                speechBubble.scriptPos++;
+            }
+        } else {
+            speechBubble.scriptComplete = true;
+        }
+    }
+
+    if (script[speechBubble.scriptPos].type === "question" && speechBubble.scriptAdvance === true) {
+        if (e.key === "ArrowUp" && speechBubble.cursorLocation - 1 > 0) {
+            speechBubble.cursorLocation--;
+        } else if (e.key === "ArrowDown" && speechBubble.cursorLocation + 1 <= script[speechBubble.scriptPos].choices.amount) {
+            speechBubble.cursorLocation++;
+        } else if (e.key === "Enter") {
+            script[speechBubble.scriptPos].doAfter();
             speechBubble.currentLines = ["", "", ""];
             speechBubble.currLine = 0;
             speechBubble.scriptPause = false;
+            speechBubble.scriptAdvance = false;
             speechBubble.letterPos = 0;
             speechBubble.scriptPos++;
-        } else {
-            speechBubble.scriptComplete = true;
+            script[speechBubble.scriptPos].answer = speechBubble.cursorLocation;
         }
     }
 });

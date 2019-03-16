@@ -1,6 +1,7 @@
 var imagesToLoad = ["./assets/images/subwayCar.png", "./assets/images/light.png", "./assets/images/speechBubble.png",
                     "./assets/images/bubbleTailLeft.png", "./assets/images/bubbleTailRight.png", "./assets/images/coolDudeIdle.png",
-                    "./assets/images/punkIdle.png", "./assets/images/punkTurn.png", "./assets/images/punkTurnIdle.png"];
+                    "./assets/images/punkIdle.png", "./assets/images/punkTurn.png", "./assets/images/punkTurnIdle.png",
+                    "./assets/images/cursor.png"];
 var loadedImages = loadImages(imagesToLoad);
 
 function loadImages(arr) {

@@ -9,14 +9,14 @@ function intro() {
         ctx.fillRect(0, 0, triviaGame.canvas.width, triviaGame.canvas.height);
         ctx.font = "40px 'Visitor'";
         ctx.fillStyle = "white";
-        ctx.fillText("Press any key to begin.", 300, triviaGame.canvas.height / 2);
+        ctx.fillText("Click to begin.", 370, triviaGame.canvas.height / 2);
     } else if (triviaGame.fade === "in") {
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, triviaGame.canvas.width, triviaGame.canvas.height);
         ctx.font = "40px 'Visitor'";
         ctx.fillStyle = "white";
         ctx.globalAlpha = opacity;
-        ctx.fillText("The Subway", 300, triviaGame.canvas.height / 2);
+        ctx.fillText("The Subway", 250, triviaGame.canvas.height / 2);
         ctx.globalAlpha = 1;
 
         if (opacity <= 1) {
@@ -33,7 +33,7 @@ function intro() {
         ctx.fillRect(0, 0, triviaGame.canvas.width, triviaGame.canvas.height);
         ctx.font = "40px 'Visitor'";
         ctx.fillStyle = "white";
-        ctx.fillText("The Subway", 300, triviaGame.canvas.height / 2);
+        ctx.fillText("The Subway", 250, triviaGame.canvas.height / 2);
         ctx.globalAlpha = 1;
 
         if (opacity > 0.05) {

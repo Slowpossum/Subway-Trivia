@@ -44,9 +44,7 @@ function talk() {
     if (!speechBubble.scriptComplete) {
         if (script[speechBubble.scriptPos].delaySet === false) {
             clearTimeout(speechBubble);
-            console.log("timer set");
             speechTimer = setTimeout(function () {
-                console.log("timer complete");
                 script[speechBubble.scriptPos].timerComplete = true;
             }, script[speechBubble.scriptPos].delay);
             script[speechBubble.scriptPos].delaySet = true;
@@ -56,12 +54,7 @@ function talk() {
             }
         }
 
-        if (script[speechBubble.scriptPos].doAfter != undefined && script[speechBubble.scriptPos].timerComplete === true) {
-            if (script[speechBubble.scriptPos].functionRun === false) {
-                script[speechBubble.scriptPos].doAfter();
-                script[speechBubble.scriptPos].functionRun = true;
-            }
-        }
+        
     }
 }
 
@@ -140,6 +133,13 @@ $(document).keyup(function () {
         speechBubble.scriptPause = false;
     } else if (speechBubble.scriptAdvance === true) {
         if (speechBubble.scriptPos !== script.length) {
+            if (script[speechBubble.scriptPos].doAfter !== undefined && script[speechBubble.scriptPos].timerComplete === true && speechBubble.scriptAdvance === true) {
+                if (script[speechBubble.scriptPos].functionRun === false) {
+                    script[speechBubble.scriptPos].doAfter();
+                    script[speechBubble.scriptPos].functionRun = true;
+                }
+            }
+
             speechBubble.currentLines = ["", "", ""];
             speechBubble.currLine = 0;
             speechBubble.scriptPause = false;
@@ -148,6 +148,5 @@ $(document).keyup(function () {
         } else {
             speechBubble.scriptComplete = true;
         }
-        
     }
 });

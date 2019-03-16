@@ -4,7 +4,7 @@ var triviaGame = {
     scale: 5,
     menu: true,
     fade: "none",
-    mute: false,
+    mute: true,
     start: function () {
         this.canvas.width = 1000;
         this.canvas.height = 500;

@@ -1,4 +1,4 @@
-var coolDude = new Character(36, 43, loadedImages["./assets/images/coolDudeIdle.png"], 400, 226, 6);
+var coolDude = new Character(36, 43, loadedImages["./assets/images/coolDudeIdle.png"], 400, 225, 6);
 var punk = new Character(25, 57, loadedImages["./assets/images/punkIdle.png"], 855, 156, 10);
 
 function Character(width, height, image, x, y, frames) {

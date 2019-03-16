@@ -190,6 +190,7 @@ $(document).keyup(function (e) {
         } else if (e.key === "ArrowDown" && speechBubble.cursorLocation + 1 <= script[speechBubble.scriptPos].choices.amount) {
             speechBubble.cursorLocation++;
         } else if (e.key === "Enter") {
+            script[speechBubble.scriptPos].answer = speechBubble.cursorLocation;
             script[speechBubble.scriptPos].doAfter();
             speechBubble.currentLines = ["", "", ""];
             speechBubble.currLine = 0;
@@ -197,7 +198,7 @@ $(document).keyup(function (e) {
             speechBubble.scriptAdvance = false;
             speechBubble.letterPos = 0;
             speechBubble.scriptPos++;
-            script[speechBubble.scriptPos].answer = speechBubble.cursorLocation;
+            speechBubble.cursorLocation = 0;
         }
     }
 });

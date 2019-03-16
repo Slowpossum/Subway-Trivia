@@ -2,6 +2,9 @@ var triviaGame = {
     canvas: document.createElement("canvas"),
     frameCount: 0,
     scale: 5,
+    menu: true,
+    fade: "none",
+    mute: false,
     start: function () {
         this.canvas.width = 1000;
         this.canvas.height = 500;

@@ -20,4 +20,8 @@ function updateGameArea() {
     if (triviaGame.fade !== "done") {
         intro();
     }
+
+    if (speechBubble.scriptComplete === true) {
+        outro();
+    }
 }

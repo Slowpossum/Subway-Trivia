@@ -198,7 +198,7 @@ $(document).keyup(function (e) {
             speechBubble.scriptAdvance = false;
             speechBubble.letterPos = 0;
             speechBubble.scriptPos++;
-            speechBubble.cursorLocation = 0;
+            speechBubble.cursorLocation = 1;
         }
     }
 });
